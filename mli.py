@@ -67,25 +67,30 @@ class PartialDependence:
         ylabel: str | None = None,
         title: str | None = None,
     ) -> None:
-        """"""
-
+        """可視化を行う"""
+        
+        # 真の関数形
         y = f(self.result["values"])
 
         fig, ax = plt.subplots()
-
-        ax.plot(self.result["values"], y, zorder=1, c=".7")
-        ax.plot(self.result["values"], self.result["pred"], zorder=2)
+        
+        # 真の関係を可視化
+        ax.plot(self.result["values"], y, zorder=1, c=".7", label="真の関係")
+        # 推定された関係を可視化
+        ax.plot(self.result["values"], self.result["pred"], zorder=2, label="推定された関係")
+        
         ax.set(xlabel=f"X{self.j}", ylabel=ylabel)
+        ax.legend()
         fig.suptitle(title)
 
         fig.show()
 
 
 class Marginal(PartialDependence):
-    """Marginal (M)"""
+    """Marginal Plot"""
 
     def marginal(self, j: int, n_grid: int = 30) -> None:
-        """M Plotのためのデータを求める
+        """Marginal Plotのためのデータを求める
 
         Args:
             j:
